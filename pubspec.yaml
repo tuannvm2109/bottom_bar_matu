@@ -1,0 +1,19 @@
+name: bottom_bar_matu
+description: A beautiful and animated bottom navigation bar.
+version: 1.0.0
+homepage:
+
+environment:
+  sdk: ">=2.17.6 <3.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
