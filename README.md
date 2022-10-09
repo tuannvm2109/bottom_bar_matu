@@ -1,7 +1,7 @@
 
 A beautiful and animated bottom navigation bar.
 
-![DEMO](assets/flutter_rating_bar.gif)
+![DEMO](https://github.com/tuannvm2109/bottom_bar_matu/blob/master/assets/bottom_bar_matu_bubble.gif)
 
 ## Usage
 
