@@ -44,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(widget.title)),
-      bottomNavigationBar: BottomBarBubble(
+      bottomNavigationBar: BottomBarDoubleBullet(
         selectedIndex: _index,
         items: [
           BottomBarItem(

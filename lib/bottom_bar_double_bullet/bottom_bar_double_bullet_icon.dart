@@ -4,8 +4,8 @@ import '../bottom_bar_item.dart';
 import '../clipper/custom_clipper.dart';
 import '../components/colors.dart';
 
-class BottomBarBubbleIcon extends StatefulWidget {
-  const BottomBarBubbleIcon({
+class BottomBarDoubleBulletIcon extends StatefulWidget {
+  const BottomBarDoubleBulletIcon({
     Key? key,
     required this.item,
     required this.color,
@@ -17,10 +17,10 @@ class BottomBarBubbleIcon extends StatefulWidget {
   final bool isSelected;
 
   @override
-  BottomBarBubbleIconState createState() => BottomBarBubbleIconState();
+  BottomBarDoubleBulletIconState createState() => BottomBarDoubleBulletIconState();
 }
 
-class BottomBarBubbleIconState extends State<BottomBarBubbleIcon> with SingleTickerProviderStateMixin {
+class BottomBarDoubleBulletIconState extends State<BottomBarDoubleBulletIcon> with SingleTickerProviderStateMixin {
   static const duration = Duration(milliseconds: 500);
 
   late AnimationController _animationController;
@@ -54,37 +54,6 @@ class BottomBarBubbleIconState extends State<BottomBarBubbleIcon> with SingleTic
         children: [
           Positioned(bottom: 5, left: 0, right: 0, child: _labelWidget()),
           Positioned(bottom: widget.item.label != null ? 10 : 0, top: 0, left: 0, right: 0, child: _iconWidget()),
-          Container(
-            alignment: Alignment.center,
-            padding: EdgeInsets.only(bottom: widget.item.label != null ? 10 : 0),
-            child: AnimatedBuilder(
-              animation: _animation,
-              builder: (BuildContext context, Widget? child) {
-                final scaleValue = _animation.value;
-
-                final opacityValue = (-6.25 * pow(_animation.value, 2) + 6.25 * _animation.value);
-
-                return Opacity(
-                  opacity: _isSelect
-                      ? opacityValue > 1
-                          ? 1
-                          : opacityValue
-                      : 0,
-                  child: Transform.scale(
-                    scale: scaleValue,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: widget.color, width: 2),
-                        borderRadius: BorderRadius.circular(100),
-                      ),
-                      width: 50,
-                      height: 50,
-                    ),
-                  ),
-                );
-              },
-            ),
-          )
         ],
       ),
     );
@@ -105,8 +74,9 @@ class BottomBarBubbleIconState extends State<BottomBarBubbleIcon> with SingleTic
               final color = Color.lerp(colorGrey4, widget.color, value);
 
               final scaleValue = -5 * (pow(_animation.value, 2) - _animation.value);
-              return Transform.scale(
-                scale: scaleValue < 1 ? 1 : scaleValue,
+
+              return Transform.rotate(
+                angle: -pi / scaleValue,
                 child: _buildIconWidget(color!),
               );
             },
@@ -122,8 +92,9 @@ class BottomBarBubbleIconState extends State<BottomBarBubbleIcon> with SingleTic
               value = value > 1 ? 1 : value;
               final color = Color.lerp(colorGrey4, widget.color, value);
               final scaleValue = -5 * (pow(_animation.value, 2) - _animation.value);
-              return Transform.scale(
-                scale: scaleValue < 1 ? 1 : scaleValue,
+
+              return Transform.rotate(
+                angle: -pi / scaleValue,
                 child: _buildIconWidget(color!),
               );
             },
@@ -139,8 +110,9 @@ class BottomBarBubbleIconState extends State<BottomBarBubbleIcon> with SingleTic
               value = value > 1 ? 1 : value;
               final color = Color.lerp(colorGrey4, widget.color, value);
               final scaleValue = -5 * (pow(_animation.value, 2) - _animation.value);
-              return Transform.scale(
-                scale: scaleValue < 1 ? 1 : scaleValue,
+
+              return Transform.rotate(
+                angle: -pi / scaleValue,
                 child: _buildIconWidget(color!),
               );
             },
@@ -157,8 +129,8 @@ class BottomBarBubbleIconState extends State<BottomBarBubbleIcon> with SingleTic
               final color = Color.lerp(colorGrey4, widget.color, value);
 
               final scaleValue = -5 * (pow(_animation.value, 2) - _animation.value);
-              return Transform.scale(
-                scale: scaleValue < 1 ? 1 : scaleValue,
+              return Transform.rotate(
+                angle: -pi / scaleValue,
                 child: _buildIconWidget(color!),
               );
             },
@@ -174,8 +146,9 @@ class BottomBarBubbleIconState extends State<BottomBarBubbleIcon> with SingleTic
               value = value > 1 ? 1 : value;
               final color = Color.lerp(colorGrey4, widget.color, value);
               final scaleValue = -5 * (pow(_animation.value, 2) - _animation.value);
-              return Transform.scale(
-                scale: scaleValue < 1 ? 1 : scaleValue,
+
+              return Transform.rotate(
+                angle: -pi / scaleValue,
                 child: _buildIconWidget(color!),
               );
             },

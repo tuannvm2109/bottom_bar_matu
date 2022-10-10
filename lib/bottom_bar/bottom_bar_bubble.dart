@@ -1,8 +1,6 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-
-import '../components/colors.dart';
+import '../bottom_bar_item.dart';
 import 'bottom_bar_bubble_icon.dart';
 
 class BottomBarBubble extends StatefulWidget {
@@ -21,7 +19,7 @@ class BottomBarBubble extends StatefulWidget {
   final double bubbleSize;
   final Color color;
   final ValueChanged<int>? onSelect;
-  final List<BottomBarBubbleItem> items;
+  final List<BottomBarItem> items;
 
   @override
   State<BottomBarBubble> createState() => _BottomBarBubbleState();
