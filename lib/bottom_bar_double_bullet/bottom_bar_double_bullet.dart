@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui';
 import 'package:bottom_bar_matu/bottom_bar_double_bullet/bottom_bar_double_bullet_icon.dart';
 import 'package:flutter/material.dart';
 import '../bottom_bar_item.dart';
@@ -76,14 +77,6 @@ class _BottomBarDoubleBulletState extends State<BottomBarDoubleBullet> with Sing
     super.dispose();
   }
 
-  double _getLeftPosition() {
-    double width = MediaQuery.of(context).size.width;
-
-    final iconWidth = width / _iconCount;
-
-    return (_selectedIndex * iconWidth) + (iconWidth / 2);
-  }
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -94,19 +87,34 @@ class _BottomBarDoubleBulletState extends State<BottomBarDoubleBullet> with Sing
             child: AnimatedBuilder(
               animation: _animation,
               builder: (BuildContext context, Widget? child) {
-                final value = _animation.value!;
-                double width = MediaQuery.of(context).size.width;
-                final iconWidth = width / _iconCount;
-
-                final startOffset = Offset((_oldSelectedIndex * iconWidth) + (iconWidth / 2), widget.height / 2);
-                final endOffset = Offset((_selectedIndex * iconWidth) + (iconWidth / 2), widget.height / 2);
-
+                final startOffSet = _getStartOffset();
+                final endOffSet = _getEndOffset();
 
                 return ClipPath(
-                    clipper: BottomBarDoubleBulletClipper(_animation.status == AnimationStatus.reverse ? 1 - value : value),
-                    child: CustomPaint(painter: BulletLinePainter(widget.height, startOffset, endOffset)));
+                    clipper: BottomBarDoubleBulletClipper(
+                      _getAnimationValue(),
+                      startOffSet.dx,
+                      endOffSet.dx,
+                      _oldSelectedIndex > _selectedIndex,
+                    ),
+                    child: CustomPaint(painter: BulletLinePainter(_getPath())));
               },
             ),
+          ),
+          AnimatedBuilder(
+            animation: _animation,
+            builder: (BuildContext context, Widget? child) {
+              final path = _getPath();
+              return Positioned(
+                top: calculate(path).dy - 5,
+                left: calculate(path).dx + (_oldSelectedIndex < _selectedIndex ? 20 : -20),
+                child: Container(
+                  decoration: BoxDecoration(color: Colors.blueAccent, borderRadius: BorderRadius.circular(10)),
+                  width: 10,
+                  height: 10,
+                ),
+              );
+            },
           ),
           Row(children: _iconsWidget()),
         ],
@@ -160,66 +168,156 @@ class _BottomBarDoubleBulletState extends State<BottomBarDoubleBullet> with Sing
 
     widget.onSelect?.call(_selectedIndex);
   }
-}
 
-class BulletLinePainter extends CustomPainter {
-  final double bottomBarHeight;
+  double _getAnimationValue() {
+    final value = _animation.value!;
+    return _animation.status == AnimationStatus.reverse ? 1 - value : value;
+  }
 
-  final Offset startOffSet;
-  final Offset endOffSet;
+  Offset _getStartOffset() {
+    double screenWidth = MediaQuery.of(context).size.width;
+    final iconWidth = screenWidth / _iconCount;
 
-  BulletLinePainter(this.bottomBarHeight, this.startOffSet, this.endOffSet);
+    return Offset((_oldSelectedIndex * iconWidth) + (iconWidth / 2), widget.height / 2);
+  }
 
-  @override
-  void paint(Canvas canvas, Size size) {
+  Offset _getEndOffset() {
+    double screenWidth = MediaQuery.of(context).size.width;
+    final iconWidth = screenWidth / _iconCount;
+
+    return Offset((_selectedIndex * iconWidth) + (iconWidth / 2), widget.height / 2);
+  }
+
+  Path _getPath() {
+    final isReverse = _oldSelectedIndex > _selectedIndex;
+
+    final startOffSet = _getStartOffset();
+    final endOffSet = _getEndOffset();
+
     final width = (startOffSet.dx - endOffSet.dx).abs();
 
-    final sx = startOffSet.dx;
-    final sy = bottomBarHeight / 4 * 1.5;
+    double sx, sy, p1x, p1y, p2x, p2y, ex, ey;
+    if (!isReverse) {
+      sx = startOffSet.dx;
+      sy = widget.height / 4 * 1.5;
 
-    final p1x = startOffSet.dx + width / 4;
-    final p1y = bottomBarHeight / 4 * 2.5;
+      p1x = startOffSet.dx + width / 4;
+      p1y = widget.height / 4 * 2.5;
 
-    final p2x = startOffSet.dx + 3 * width / 4;
-    final p2y = bottomBarHeight / 4 * 1.5;
+      p2x = startOffSet.dx + 3 * width / 4;
+      p2y = widget.height / 4 * 1.5;
 
-    final ex = endOffSet.dx;
-    final ey = bottomBarHeight / 4 * 2.5;
+      ex = endOffSet.dx;
+      ey = widget.height / 4 * 2.5;
+    } else {
+      sx = startOffSet.dx;
+      sy = widget.height / 4 * 2.5;
+
+      p1x = endOffSet.dx + 3 * width / 4;
+      p1y = widget.height / 4 * 1.5;
+
+      p2x = endOffSet.dx + width / 4;
+      p2y = widget.height / 4 * 2.5;
+
+      ex = endOffSet.dx;
+      ey = widget.height / 4 * 1.5;
+    }
 
     Path path = Path();
     path.moveTo(sx, sy);
 
     path.cubicTo(p1x, p1y, p2x, p2y, ex, ey);
+    return path;
+  }
 
+  Path _getPath2() {
+    final startOffSet = _getStartOffset();
+    final endOffSet = _getEndOffset();
+
+    final width = (startOffSet.dx - endOffSet.dx).abs();
+
+    final sx = startOffSet.dx;
+    final sy = widget.height / 4 * 1.5;
+
+    final p1x = startOffSet.dx + width / 4;
+    final p1y = widget.height / 4 * 2.5;
+
+    final p2x = startOffSet.dx + 3 * width / 4;
+    final p2y = widget.height / 4 * 1.5;
+
+    final ex = endOffSet.dx;
+    final ey = widget.height / 4 * 2.5;
+
+    Path path = Path();
+    path.moveTo(sx, sy);
+
+    path.cubicTo(p1x, p1y, p2x, p2y, ex, ey);
+    return path;
+  }
+
+  Offset calculate(Path path) {
+    var value = _getAnimationValue();
+    PathMetrics pathMetrics = path.computeMetrics();
+    PathMetric pathMetric = pathMetrics.elementAt(0);
+    value = pathMetric.length * value;
+    Tangent pos = pathMetric.getTangentForOffset(value)!;
+    return pos.position;
+  }
+}
+
+class BulletLinePainter extends CustomPainter {
+  final Path path;
+
+  BulletLinePainter(this.path);
+
+  @override
+  void paint(Canvas canvas, Size size) {
     canvas.drawPath(
         path,
         Paint()
           ..color = Colors.green
           ..style = PaintingStyle.stroke
-          ..strokeWidth = 1);
-
+          ..strokeWidth = 1.5);
   }
 
   @override
   bool shouldRepaint(BulletLinePainter oldDelegate) {
-    return (oldDelegate.startOffSet != startOffSet) || (oldDelegate.endOffSet != endOffSet);
+    return oldDelegate.path != path;
   }
 }
 
 class BottomBarDoubleBulletClipper extends CustomClipper<Path> {
   final double progress;
+  final double startX;
+  final double endX;
+  final bool isReverse;
 
-  BottomBarDoubleBulletClipper(this.progress);
+  BottomBarDoubleBulletClipper(
+    this.progress,
+    this.startX,
+    this.endX,
+    this.isReverse,
+  );
 
   @override
   Path getClip(Size size) {
     final value = progress;
 
+    final width = (endX - startX).abs();
+
     final path = Path();
-    path.moveTo(size.width * value - 20, 0.0);
-    path.lineTo(size.width * value + 20, 0.0);
-    path.lineTo(size.width * value + 20, size.height);
-    path.lineTo(size.width * value - 20, size.height);
+    if (!isReverse) {
+      path.moveTo(startX + width * value - 20, 0.0);
+      path.lineTo(startX + width * value + 20, 0.0);
+      path.lineTo(startX + width * value + 20, size.height);
+      path.lineTo(startX + width * value - 20, size.height);
+    } else {
+      path.moveTo(startX - width * value + 20, 0.0);
+      path.lineTo(startX - width * value - 20, 0.0);
+      path.lineTo(startX - width * value - 20, size.height);
+      path.lineTo(startX - width * value + 20, size.height);
+    }
+
     path.close();
     return path;
   }

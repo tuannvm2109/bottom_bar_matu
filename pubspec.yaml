@@ -1,7 +1,7 @@
 name: bottom_bar_matu
 description: A beautiful and animated bottom navigation bar.
 version: 1.0.0
-homepage:
+homepage: https://github.com/tuannvm2109/bottom_bar_matu
 
 environment:
   sdk: ">=2.17.6 <3.0.0"
