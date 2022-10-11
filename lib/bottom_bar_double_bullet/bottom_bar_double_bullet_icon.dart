@@ -27,6 +27,7 @@ class BottomBarDoubleBulletIconState extends State<BottomBarDoubleBulletIcon> wi
   late Tween<double> _colorTween;
   late Animation<double> _animation;
   bool _isSelect = false;
+  bool _isLeftToRight = false;
 
   @override
   void initState() {
@@ -60,102 +61,28 @@ class BottomBarDoubleBulletIconState extends State<BottomBarDoubleBulletIcon> wi
   }
 
   Widget _iconWidget() {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        ClipPath(
-          clipper: Clipper1(),
-          child: AnimatedBuilder(
-            animation: _animation,
-            builder: (BuildContext context, Widget? child) {
-              var value = _animation.value * 2;
-              value = value < 0 ? 0 : value;
-              value = value > 1 ? 1 : value;
-              final color = Color.lerp(colorGrey4, widget.color, value);
+   return Stack(
+     alignment: Alignment.center,
+     children: [
+       AnimatedBuilder(
+          animation: _animation,
+          builder: (BuildContext context, Widget? child) {
+            var value = _animation.value * 2;
+            value = value < 0 ? 0 : value;
+            value = value > 1 ? 1 : value;
+            final color = Color.lerp(colorGrey5, widget.color, value);
 
-              final scaleValue = -5 * (pow(_animation.value, 2) - _animation.value);
+            final scaleValue = - 5 * (pow(_animation.value, 2) - _animation.value);
 
-              return Transform.rotate(
-                angle: -pi / scaleValue,
-                child: _buildIconWidget(color!),
-              );
-            },
-          ),
+            return Transform.rotate(
+              angle: -pi / (_isLeftToRight? (8 * scaleValue) : -(8 * scaleValue) ),
+              child: _buildIconWidget(color!),
+            );
+          },
         ),
-        ClipPath(
-          clipper: Clipper2(),
-          child: AnimatedBuilder(
-            animation: _animation,
-            builder: (BuildContext context, Widget? child) {
-              var value = _animation.value * 3;
-              value = value < 0 ? 0 : value;
-              value = value > 1 ? 1 : value;
-              final color = Color.lerp(colorGrey4, widget.color, value);
-              final scaleValue = -5 * (pow(_animation.value, 2) - _animation.value);
+     ],
+   );
 
-              return Transform.rotate(
-                angle: -pi / scaleValue,
-                child: _buildIconWidget(color!),
-              );
-            },
-          ),
-        ),
-        ClipPath(
-          clipper: Clipper3(),
-          child: AnimatedBuilder(
-            animation: _animation,
-            builder: (BuildContext context, Widget? child) {
-              var value = _animation.value * 4;
-              value = value < 0 ? 0 : value;
-              value = value > 1 ? 1 : value;
-              final color = Color.lerp(colorGrey4, widget.color, value);
-              final scaleValue = -5 * (pow(_animation.value, 2) - _animation.value);
-
-              return Transform.rotate(
-                angle: -pi / scaleValue,
-                child: _buildIconWidget(color!),
-              );
-            },
-          ),
-        ),
-        ClipPath(
-          clipper: Clipper4(),
-          child: AnimatedBuilder(
-            animation: _animation,
-            builder: (BuildContext context, Widget? child) {
-              var value = _animation.value * 5;
-              value = value < 0 ? 0 : value;
-              value = value > 1 ? 1 : value;
-              final color = Color.lerp(colorGrey4, widget.color, value);
-
-              final scaleValue = -5 * (pow(_animation.value, 2) - _animation.value);
-              return Transform.rotate(
-                angle: -pi / scaleValue,
-                child: _buildIconWidget(color!),
-              );
-            },
-          ),
-        ),
-        ClipPath(
-          clipper: Clipper5(),
-          child: AnimatedBuilder(
-            animation: _animation,
-            builder: (BuildContext context, Widget? child) {
-              var value = _animation.value * 6;
-              value = value < 0 ? 0 : value;
-              value = value > 1 ? 1 : value;
-              final color = Color.lerp(colorGrey4, widget.color, value);
-              final scaleValue = -5 * (pow(_animation.value, 2) - _animation.value);
-
-              return Transform.rotate(
-                angle: -pi / scaleValue,
-                child: _buildIconWidget(color!),
-              );
-            },
-          ),
-        ),
-      ],
-    );
   }
 
   Widget _buildIconWidget(Color color) {
@@ -173,7 +100,7 @@ class BottomBarDoubleBulletIconState extends State<BottomBarDoubleBulletIcon> wi
         textAlign: TextAlign.center,
         overflow: TextOverflow.ellipsis,
         style: (widget.item.labelTextStyle ?? const TextStyle()).copyWith(
-          color: _isSelect ? widget.color : colorGrey4,
+          color: _isSelect ? widget.color : colorGrey5,
         ),
       );
     } else {
@@ -181,9 +108,10 @@ class BottomBarDoubleBulletIconState extends State<BottomBarDoubleBulletIcon> wi
     }
   }
 
-  void updateSelect(bool isSelect) {
+  void updateSelect(bool isSelect, bool isLeftToRight) {
     setState(() {
       _isSelect = isSelect;
+      _isLeftToRight = isLeftToRight;
     });
 
     if (!isSelect) {

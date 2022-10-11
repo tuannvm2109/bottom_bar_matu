@@ -12,6 +12,9 @@ class BottomBarDoubleBullet extends StatefulWidget {
     this.height = 71,
     this.bubbleSize = 10,
     this.color = Colors.green,
+    this.circle1Color = Colors.blue,
+    this.circle2Color = Colors.red,
+
     this.onSelect,
   }) : super(key: key);
 
@@ -19,6 +22,8 @@ class BottomBarDoubleBullet extends StatefulWidget {
   final double height;
   final double bubbleSize;
   final Color color;
+  final Color circle1Color;
+  final Color circle2Color;
   final ValueChanged<int>? onSelect;
   final List<BottomBarItem> items;
 
@@ -27,7 +32,7 @@ class BottomBarDoubleBullet extends StatefulWidget {
 }
 
 class _BottomBarDoubleBulletState extends State<BottomBarDoubleBullet> with SingleTickerProviderStateMixin {
-  static const duration = Duration(milliseconds: 1000);
+  static const duration = Duration(milliseconds: 500);
   List<GlobalKey<BottomBarDoubleBulletIconState>> iconsKey = [];
 
   late int _iconCount = 0;
@@ -97,21 +102,60 @@ class _BottomBarDoubleBulletState extends State<BottomBarDoubleBullet> with Sing
                       endOffSet.dx,
                       _oldSelectedIndex > _selectedIndex,
                     ),
-                    child: CustomPaint(painter: BulletLinePainter(_getPath())));
+                    child: CustomPaint(painter: BulletLinePainter(_getPath1(), widget.color)));
               },
             ),
           ),
           AnimatedBuilder(
             animation: _animation,
             builder: (BuildContext context, Widget? child) {
-              final path = _getPath();
+              final path = _getPath1();
               return Positioned(
-                top: calculate(path).dy - 5,
-                left: calculate(path).dx + (_oldSelectedIndex < _selectedIndex ? 20 : -20),
-                child: Container(
-                  decoration: BoxDecoration(color: Colors.blueAccent, borderRadius: BorderRadius.circular(10)),
-                  width: 10,
-                  height: 10,
+                top: calculate(path).dy - 3,
+                left: calculate(path).dx + (_oldSelectedIndex < _selectedIndex ? 13 : -17),
+                child: Opacity(
+                  opacity: _getAnimationValue() * 1.5 >= 0.9 ? 0 : 1,
+                  child: Container(
+                    decoration: BoxDecoration(color: widget.circle1Color, borderRadius: BorderRadius.circular(10)),
+                    width: 5,
+                    height: 5,
+                  ),
+                ),
+              );
+            },
+          ),
+          Positioned.fill(
+            child: AnimatedBuilder(
+              animation: _animation,
+              builder: (BuildContext context, Widget? child) {
+                final startOffSet = _getStartOffset();
+                final endOffSet = _getEndOffset();
+
+                return ClipPath(
+                    clipper: BottomBarDoubleBulletClipper(
+                      _getAnimationValue(),
+                      startOffSet.dx,
+                      endOffSet.dx,
+                      _oldSelectedIndex > _selectedIndex,
+                    ),
+                    child: CustomPaint(painter: BulletLinePainter(_getPath2(), widget.color)));
+              },
+            ),
+          ),
+          AnimatedBuilder(
+            animation: _animation,
+            builder: (BuildContext context, Widget? child) {
+              final path = _getPath2();
+              return Positioned(
+                top: calculate(path).dy - 3,
+                left: calculate(path).dx + (_oldSelectedIndex < _selectedIndex ? 13 : -17),
+                child: Opacity(
+                  opacity: _getAnimationValue() * 1.5 >= 0.9 ? 0 : 1,
+                  child: Container(
+                    decoration: BoxDecoration(color: widget.circle2Color, borderRadius: BorderRadius.circular(10)),
+                    width: 5,
+                    height: 5,
+                  ),
                 ),
               );
             },
@@ -150,8 +194,8 @@ class _BottomBarDoubleBulletState extends State<BottomBarDoubleBullet> with Sing
     }
 
     _oldSelectedIndex = _selectedIndex;
-    iconsKey[_oldSelectedIndex].currentState?.updateSelect(false);
-    await Future.delayed(const Duration(milliseconds: 200));
+    iconsKey[_oldSelectedIndex].currentState?.updateSelect(false, _oldSelectedIndex < _selectedIndex);
+    // await Future.delayed(const Duration(milliseconds: 200));
 
     if (_animationController.status == AnimationStatus.completed) {
       _animationController.reverse();
@@ -164,13 +208,17 @@ class _BottomBarDoubleBulletState extends State<BottomBarDoubleBullet> with Sing
     });
 
     await Future.delayed(const Duration(milliseconds: 200));
-    iconsKey[_selectedIndex].currentState?.updateSelect(true);
+    iconsKey[_selectedIndex].currentState?.updateSelect(true, _oldSelectedIndex < _selectedIndex);
 
     widget.onSelect?.call(_selectedIndex);
   }
 
   double _getAnimationValue() {
     final value = _animation.value!;
+
+    if (_animation.status == AnimationStatus.dismissed) {
+      return 1;
+    }
     return _animation.status == AnimationStatus.reverse ? 1 - value : value;
   }
 
@@ -188,7 +236,7 @@ class _BottomBarDoubleBulletState extends State<BottomBarDoubleBullet> with Sing
     return Offset((_selectedIndex * iconWidth) + (iconWidth / 2), widget.height / 2);
   }
 
-  Path _getPath() {
+  Path _getPath1() {
     final isReverse = _oldSelectedIndex > _selectedIndex;
 
     final startOffSet = _getStartOffset();
@@ -202,10 +250,10 @@ class _BottomBarDoubleBulletState extends State<BottomBarDoubleBullet> with Sing
       sy = widget.height / 4 * 1.5;
 
       p1x = startOffSet.dx + width / 4;
-      p1y = widget.height / 4 * 2.5;
+      p1y = widget.height / 4 * 0.5;
 
       p2x = startOffSet.dx + 3 * width / 4;
-      p2y = widget.height / 4 * 1.5;
+      p2y = widget.height / 4 * 3.5;
 
       ex = endOffSet.dx;
       ey = widget.height / 4 * 2.5;
@@ -214,10 +262,10 @@ class _BottomBarDoubleBulletState extends State<BottomBarDoubleBullet> with Sing
       sy = widget.height / 4 * 2.5;
 
       p1x = endOffSet.dx + 3 * width / 4;
-      p1y = widget.height / 4 * 1.5;
+      p1y = widget.height / 4 * 3.5;
 
       p2x = endOffSet.dx + width / 4;
-      p2y = widget.height / 4 * 2.5;
+      p2y = widget.height / 4 * 0.5;
 
       ex = endOffSet.dx;
       ey = widget.height / 4 * 1.5;
@@ -231,22 +279,39 @@ class _BottomBarDoubleBulletState extends State<BottomBarDoubleBullet> with Sing
   }
 
   Path _getPath2() {
+    final isReverse = _oldSelectedIndex > _selectedIndex;
+
     final startOffSet = _getStartOffset();
     final endOffSet = _getEndOffset();
 
     final width = (startOffSet.dx - endOffSet.dx).abs();
 
-    final sx = startOffSet.dx;
-    final sy = widget.height / 4 * 1.5;
+    double sx, sy, p1x, p1y, p2x, p2y, ex, ey;
+    if (!isReverse) {
+      sx = startOffSet.dx;
+      sy = widget.height / 4 * 2.5;
 
-    final p1x = startOffSet.dx + width / 4;
-    final p1y = widget.height / 4 * 2.5;
+      p1x = startOffSet.dx + width / 4;
+      p1y = widget.height / 4 * 3.5;
 
-    final p2x = startOffSet.dx + 3 * width / 4;
-    final p2y = widget.height / 4 * 1.5;
+      p2x = startOffSet.dx + 3 * width / 4;
+      p2y = widget.height / 4 * 0.5;
 
-    final ex = endOffSet.dx;
-    final ey = widget.height / 4 * 2.5;
+      ex = endOffSet.dx;
+      ey = widget.height / 4 * 1.5;
+    } else {
+      sx = startOffSet.dx;
+      sy = widget.height / 4 * 1.5;
+
+      p1x = endOffSet.dx + 3 * width / 4;
+      p1y = widget.height / 4 * 0.5;
+
+      p2x = endOffSet.dx + width / 4;
+      p2y = widget.height / 4 * 3.5;
+
+      ex = endOffSet.dx;
+      ey = widget.height / 4 * 2.5;
+    }
 
     Path path = Path();
     path.moveTo(sx, sy);
@@ -256,7 +321,7 @@ class _BottomBarDoubleBulletState extends State<BottomBarDoubleBullet> with Sing
   }
 
   Offset calculate(Path path) {
-    var value = _getAnimationValue();
+    var value = _getAnimationValue() * 1.5;
     PathMetrics pathMetrics = path.computeMetrics();
     PathMetric pathMetric = pathMetrics.elementAt(0);
     value = pathMetric.length * value;
@@ -267,15 +332,16 @@ class _BottomBarDoubleBulletState extends State<BottomBarDoubleBullet> with Sing
 
 class BulletLinePainter extends CustomPainter {
   final Path path;
+  final Color color;
 
-  BulletLinePainter(this.path);
+  BulletLinePainter(this.path, this.color);
 
   @override
   void paint(Canvas canvas, Size size) {
     canvas.drawPath(
         path,
         Paint()
-          ..color = Colors.green
+          ..color = color
           ..style = PaintingStyle.stroke
           ..strokeWidth = 1.5);
   }
@@ -307,15 +373,15 @@ class BottomBarDoubleBulletClipper extends CustomClipper<Path> {
 
     final path = Path();
     if (!isReverse) {
-      path.moveTo(startX + width * value - 20, 0.0);
-      path.lineTo(startX + width * value + 20, 0.0);
-      path.lineTo(startX + width * value + 20, size.height);
-      path.lineTo(startX + width * value - 20, size.height);
+      path.moveTo(startX + width * value * 1.5 - 30, 0.0);
+      path.lineTo(startX + width * value * 1.5 + 10, 0.0);
+      path.lineTo(startX + width * value * 1.5 + 10, size.height);
+      path.lineTo(startX + width * value * 1.5 - 30, size.height);
     } else {
-      path.moveTo(startX - width * value + 20, 0.0);
-      path.lineTo(startX - width * value - 20, 0.0);
-      path.lineTo(startX - width * value - 20, size.height);
-      path.lineTo(startX - width * value + 20, size.height);
+      path.moveTo(startX - width * value * 1.5 + 30, 0.0);
+      path.lineTo(startX - width * value * 1.5 - 10, 0.0);
+      path.lineTo(startX - width * value * 1.5 - 10, size.height);
+      path.lineTo(startX - width * value * 1.5 + 30, size.height);
     }
 
     path.close();

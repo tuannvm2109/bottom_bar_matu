@@ -102,7 +102,7 @@ class BottomBarBubbleIconState extends State<BottomBarBubbleIcon> with SingleTic
               var value = _animation.value * 2;
               value = value < 0 ? 0 : value;
               value = value > 1 ? 1 : value;
-              final color = Color.lerp(colorGrey4, widget.color, value);
+              final color = Color.lerp(colorGrey5, widget.color, value);
 
               final scaleValue = -5 * (pow(_animation.value, 2) - _animation.value);
               return Transform.scale(
@@ -120,7 +120,7 @@ class BottomBarBubbleIconState extends State<BottomBarBubbleIcon> with SingleTic
               var value = _animation.value * 3;
               value = value < 0 ? 0 : value;
               value = value > 1 ? 1 : value;
-              final color = Color.lerp(colorGrey4, widget.color, value);
+              final color = Color.lerp(colorGrey5, widget.color, value);
               final scaleValue = -5 * (pow(_animation.value, 2) - _animation.value);
               return Transform.scale(
                 scale: scaleValue < 1 ? 1 : scaleValue,
@@ -137,7 +137,7 @@ class BottomBarBubbleIconState extends State<BottomBarBubbleIcon> with SingleTic
               var value = _animation.value * 4;
               value = value < 0 ? 0 : value;
               value = value > 1 ? 1 : value;
-              final color = Color.lerp(colorGrey4, widget.color, value);
+              final color = Color.lerp(colorGrey5, widget.color, value);
               final scaleValue = -5 * (pow(_animation.value, 2) - _animation.value);
               return Transform.scale(
                 scale: scaleValue < 1 ? 1 : scaleValue,
@@ -154,7 +154,7 @@ class BottomBarBubbleIconState extends State<BottomBarBubbleIcon> with SingleTic
               var value = _animation.value * 5;
               value = value < 0 ? 0 : value;
               value = value > 1 ? 1 : value;
-              final color = Color.lerp(colorGrey4, widget.color, value);
+              final color = Color.lerp(colorGrey5, widget.color, value);
 
               final scaleValue = -5 * (pow(_animation.value, 2) - _animation.value);
               return Transform.scale(
@@ -172,7 +172,7 @@ class BottomBarBubbleIconState extends State<BottomBarBubbleIcon> with SingleTic
               var value = _animation.value * 6;
               value = value < 0 ? 0 : value;
               value = value > 1 ? 1 : value;
-              final color = Color.lerp(colorGrey4, widget.color, value);
+              final color = Color.lerp(colorGrey5, widget.color, value);
               final scaleValue = -5 * (pow(_animation.value, 2) - _animation.value);
               return Transform.scale(
                 scale: scaleValue < 1 ? 1 : scaleValue,
@@ -200,7 +200,7 @@ class BottomBarBubbleIconState extends State<BottomBarBubbleIcon> with SingleTic
         textAlign: TextAlign.center,
         overflow: TextOverflow.ellipsis,
         style: (widget.item.labelTextStyle ?? const TextStyle()).copyWith(
-          color: _isSelect ? widget.color : colorGrey4,
+          color: _isSelect ? widget.color : colorGrey5,
         ),
       );
     } else {

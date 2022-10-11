@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Bottom Bar Bubble'),
+      home: const MyHomePage(title: 'Flutter Bottom Bar Double Bullet'),
     );
   }
 }
@@ -48,23 +48,23 @@ class _MyHomePageState extends State<MyHomePage> {
         selectedIndex: _index,
         items: [
           BottomBarItem(
-            iconData: Icons.home,
+            iconData: Icons.home_outlined,
             // label: 'Home',
           ),
           BottomBarItem(
-            iconData: Icons.chat,
+            iconData: Icons.chat_outlined,
             // label: 'Chat',
           ),
           BottomBarItem(
-            iconData: Icons.notifications,
+            iconData: Icons.notifications_outlined,
             // label: 'Notification',
           ),
           BottomBarItem(
-            iconData: Icons.calendar_month,
+            iconData: Icons.calendar_month_outlined,
             // label: 'Calendar',
           ),
           BottomBarItem(
-            iconData: Icons.settings,
+            iconData: Icons.settings_outlined,
             // label: 'Setting',
           ),
         ],
