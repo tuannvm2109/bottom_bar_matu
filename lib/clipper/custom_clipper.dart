@@ -37,7 +37,6 @@ class Clipper2 extends CustomClipper<Path> {
   }
 }
 
-
 class Clipper3 extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
@@ -55,7 +54,6 @@ class Clipper3 extends CustomClipper<Path> {
     return false;
   }
 }
-
 
 class Clipper4 extends CustomClipper<Path> {
   @override
@@ -75,8 +73,6 @@ class Clipper4 extends CustomClipper<Path> {
   }
 }
 
-
-
 class Clipper5 extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
@@ -94,4 +90,3 @@ class Clipper5 extends CustomClipper<Path> {
     return false;
   }
 }
-

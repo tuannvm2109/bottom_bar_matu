@@ -61,10 +61,10 @@ class BottomBarDoubleBulletIconState extends State<BottomBarDoubleBulletIcon> wi
   }
 
   Widget _iconWidget() {
-   return Stack(
-     alignment: Alignment.center,
-     children: [
-       AnimatedBuilder(
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        AnimatedBuilder(
           animation: _animation,
           builder: (BuildContext context, Widget? child) {
             var value = _animation.value * 2;
@@ -72,17 +72,16 @@ class BottomBarDoubleBulletIconState extends State<BottomBarDoubleBulletIcon> wi
             value = value > 1 ? 1 : value;
             final color = Color.lerp(colorGrey5, widget.color, value);
 
-            final scaleValue = - 5 * (pow(_animation.value, 2) - _animation.value);
+            final scaleValue = -5 * (pow(_animation.value, 2) - _animation.value);
 
             return Transform.rotate(
-              angle: -pi / (_isLeftToRight? (8 * scaleValue) : -(8 * scaleValue) ),
+              angle: -pi / (_isLeftToRight ? (8 * scaleValue) : -(8 * scaleValue)),
               child: _buildIconWidget(color!),
             );
           },
         ),
-     ],
-   );
-
+      ],
+    );
   }
 
   Widget _buildIconWidget(Color color) {

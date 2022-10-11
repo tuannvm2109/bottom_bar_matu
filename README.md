@@ -1,7 +1,13 @@
 
 A beautiful and animated bottom navigation bar.
 
+Here are some supported style:
+
+###### BottomBarBubble
 ![DEMO](https://github.com/tuannvm2109/bottom_bar_matu/blob/master/assets/bottom_bar_matu_bubble.gif)
+
+###### BottomBarDoubleBullet
+![DEMO](https://github.com/tuannvm2109/bottom_bar_matu/blob/master/assets/bottom_bar_matu_double_bullet.gif)
 
 ## Usage
 

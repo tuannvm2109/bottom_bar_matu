@@ -14,7 +14,6 @@ class BottomBarDoubleBullet extends StatefulWidget {
     this.color = Colors.green,
     this.circle1Color = Colors.blue,
     this.circle2Color = Colors.red,
-
     this.onSelect,
   }) : super(key: key);
 
