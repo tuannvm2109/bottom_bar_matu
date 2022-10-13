@@ -1,0 +1,48 @@
+import 'dart:math';
+import 'package:bottom_bar_matu/utils/utils.dart';
+import 'package:flutter/material.dart';
+
+class RippleAnimationWidget extends StatelessWidget {
+  const RippleAnimationWidget({
+    Key? key,
+    required this.animation,
+    required this.isSelect,
+    required this.color,
+  }) : super(key: key);
+
+  final Animation<double> animation;
+
+  final bool isSelect;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: animation,
+      builder: (BuildContext context, Widget? child) {
+        var scaleValue = Utils.getAnimationOneWayValue(animation);
+
+        final opacityValue = (-6.25 * pow(animation.value, 2) + 6.25 * animation.value);
+
+        return Opacity(
+          opacity: isSelect
+              ? opacityValue > 1
+                  ? 1
+                  : opacityValue
+              : 0,
+          child: Transform.scale(
+            scale: scaleValue,
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: color, width: 2),
+                borderRadius: BorderRadius.circular(100),
+              ),
+              width: 50,
+              height: 50,
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
