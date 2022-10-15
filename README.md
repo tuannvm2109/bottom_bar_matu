@@ -9,6 +9,9 @@ Here are some supported style:
 ###### BottomBarDoubleBullet
 ![DEMO](https://github.com/tuannvm2109/bottom_bar_matu/blob/master/assets/bottom_bar_matu_double_bullet.gif)
 
+###### BottomBarLabelSlide
+![DEMO](https://github.com/tuannvm2109/bottom_bar_matu/blob/master/assets/bottom_bar_matu_double_bullet.gif)
+
 ## Usage
 
 ###### Simple implementation with Icons.data:
