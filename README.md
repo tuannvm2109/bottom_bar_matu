@@ -10,7 +10,7 @@ Here are some supported style:
 ![DEMO](https://github.com/tuannvm2109/bottom_bar_matu/blob/master/assets/bottom_bar_matu_double_bullet.gif)
 
 ###### BottomBarLabelSlide
-![DEMO](https://github.com/tuannvm2109/bottom_bar_matu/blob/master/assets/bottom_bar_matu_double_bullet.gif)
+![DEMO](https://github.com/tuannvm2109/bottom_bar_matu/blob/master/assets/bottom_bar_label_slide.gif)
 
 ## Usage
 
