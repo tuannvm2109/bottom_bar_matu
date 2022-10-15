@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import '../bottom_bar_item.dart';
-import '../clipper/custom_clipper.dart';
 import '../components/colors.dart';
 
 class BottomBarDoubleBulletIcon extends StatefulWidget {

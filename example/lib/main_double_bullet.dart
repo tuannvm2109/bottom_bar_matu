@@ -32,7 +32,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _index = 0;
   final PageController controller = PageController();
 
   @override
@@ -45,7 +44,6 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(title: Text(widget.title)),
       bottomNavigationBar: BottomBarDoubleBullet(
-        selectedIndex: _index,
         items: [
           BottomBarItem(
             iconData: Icons.home_outlined,

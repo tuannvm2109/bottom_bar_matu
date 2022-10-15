@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:ui';
 import 'package:bottom_bar_matu/bottom_bar_double_bullet/bottom_bar_double_bullet_icon.dart';
 import 'package:flutter/material.dart';
@@ -91,6 +90,9 @@ class _BottomBarDoubleBulletState extends State<BottomBarDoubleBullet> with Sing
             child: AnimatedBuilder(
               animation: _animation,
               builder: (BuildContext context, Widget? child) {
+                if (_oldSelectedIndex == _selectedIndex) {
+                  return const SizedBox();
+                }
                 final startOffSet = _getStartOffset();
                 final endOffSet = _getEndOffset();
 
@@ -108,6 +110,10 @@ class _BottomBarDoubleBulletState extends State<BottomBarDoubleBullet> with Sing
           AnimatedBuilder(
             animation: _animation,
             builder: (BuildContext context, Widget? child) {
+              if (_oldSelectedIndex == _selectedIndex) {
+                return const SizedBox();
+              }
+
               final path = _getPath1();
               return Positioned(
                 top: calculate(path).dy - 3,
@@ -127,6 +133,10 @@ class _BottomBarDoubleBulletState extends State<BottomBarDoubleBullet> with Sing
             child: AnimatedBuilder(
               animation: _animation,
               builder: (BuildContext context, Widget? child) {
+                if (_oldSelectedIndex == _selectedIndex) {
+                  return const SizedBox();
+                }
+
                 final startOffSet = _getStartOffset();
                 final endOffSet = _getEndOffset();
 
@@ -144,6 +154,10 @@ class _BottomBarDoubleBulletState extends State<BottomBarDoubleBullet> with Sing
           AnimatedBuilder(
             animation: _animation,
             builder: (BuildContext context, Widget? child) {
+              if (_oldSelectedIndex == _selectedIndex) {
+                return const SizedBox();
+              }
+
               final path = _getPath2();
               return Positioned(
                 top: calculate(path).dy - 3,

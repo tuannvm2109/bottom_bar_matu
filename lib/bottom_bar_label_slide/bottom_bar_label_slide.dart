@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:bottom_bar_matu/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import '../bottom_bar_item.dart';
