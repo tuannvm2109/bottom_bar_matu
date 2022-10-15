@@ -1,9 +1,9 @@
 import 'dart:math';
 import 'package:bottom_bar_matu/components/common/ripple_animation_widget.dart';
-import 'package:bottom_bar_matu/utils/utils.dart';
+import 'package:bottom_bar_matu/components/decorations.dart';
+import 'package:bottom_bar_matu/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import '../bottom_bar_item.dart';
-import '../clipper/custom_clipper.dart';
 import '../components/colors.dart';
 
 class BottomBarLabelSlideIcon extends StatefulWidget {
@@ -49,6 +49,8 @@ class BottomBarLabelSlideIconState extends State<BottomBarLabelSlideIcon> with T
     if (widget.isSelected) {
       _isSelect = widget.isSelected;
       _controller1.forward();
+      _controller2.forward();
+      _controller3.forward();
     }
     super.initState();
   }
@@ -56,6 +58,8 @@ class BottomBarLabelSlideIconState extends State<BottomBarLabelSlideIcon> with T
   @override
   void dispose() {
     _controller1.dispose();
+    _controller2.dispose();
+    _controller3.dispose();
     super.dispose();
   }
 
@@ -64,39 +68,65 @@ class BottomBarLabelSlideIconState extends State<BottomBarLabelSlideIcon> with T
     return SizedBox(
       height: double.infinity,
       child: Stack(
+        alignment: Alignment.center,
         children: [
           AnimatedBuilder(
             animation: _animation3,
             builder: (BuildContext context, Widget? child) {
-              var value = Utils.getAnimationOneWayValue(_animation3);
+              // var value = Utils.getAnimationOneWayValue(_animation3);
+              var value = _animation3.value;
+
+              final color = Color.lerp(colorGrey5, widget.color, value);
+
               return Positioned(
-                bottom: value * 15 + 10,
-                left: widget.item.iconSize + 10,
+                bottom: value * 15 + 12,
+                left: widget.item.iconSize + 13,
                 right: 0,
-                child: _labelWidget(),
+                child: value == 0
+                    ? const SizedBox()
+                    : Text(
+                        widget.item.label!,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: (widget.item.labelTextStyle ?? const TextStyle()).copyWith(color: color),
+                      ),
               );
             },
           ),
           AnimatedBuilder(
             animation: _animation2,
             builder: (BuildContext context, Widget? child) {
-              final value = Utils.getAnimationOneWayValue(_animation2);
+              // final value = Utils.getAnimationOneWayValue(_animation2);
+
+              var value = _animation2.value;
 
               var reverseValue = 1 - value;
 
               return Positioned(
-                  bottom: 20,
-                  left: value * widget.item.iconSize + 10,
-                  right: reverseValue * 100,
-                  child: Container(height: 2, color: widget.color));
+                  bottom: 22,
+                  left: value * widget.item.iconSize + 13,
+                  right: reverseValue * 100 + 30,
+                  child: Container(
+                    height: 2.5,
+                    decoration: decorSolidRound(
+                      radius: 5,
+                      color: widget.color,
+                    ),
+                  ));
             },
+          ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(color: Colors.white, height: 22),
           ),
           Positioned(
             bottom: 0,
             left: 0,
             top: 0,
             child: _iconWidget(),
-          )
+          ),
         ],
       ),
     );
@@ -109,11 +139,11 @@ class BottomBarLabelSlideIconState extends State<BottomBarLabelSlideIcon> with T
         AnimatedBuilder(
           animation: _animation1,
           builder: (BuildContext context, Widget? child) {
-            var value = _animation1.value * 3;
-            value = value < 0 ? 0 : value;
-            value = value > 1 ? 1 : value;
-            final color = Color.lerp(colorGrey5, widget.color, value);
-            final scaleValue = -5 * (pow(_animation1.value, 2) - _animation1.value);
+            final color = Color.lerp(colorGrey5, widget.color, _animation1.value);
+            final oneWayValue = Utils.getAnimationOneWayValue(_animation1);
+            final double scaleValue =
+                _animation1.status == AnimationStatus.reverse ? 1 : -5 * (pow(oneWayValue, 2) - oneWayValue);
+
             return Transform.scale(
               scale: scaleValue < 1 ? 1 : scaleValue,
               child: _buildIconWidget(color!),
@@ -137,26 +167,17 @@ class BottomBarLabelSlideIconState extends State<BottomBarLabelSlideIcon> with T
     }
   }
 
-  Widget _labelWidget() {
-    return Text(
-      widget.item.label!,
-      textAlign: TextAlign.center,
-      overflow: TextOverflow.ellipsis,
-      style: (widget.item.labelTextStyle ?? const TextStyle()).copyWith(color: widget.color),
-    );
-  }
-
   Future updateSelect(bool isSelect) async {
     setState(() {
       _isSelect = isSelect;
     });
 
     if (!isSelect) {
-      _controller1.reverse();
+      _controller3.reverse();
       await Future.delayed(Duration(milliseconds: 200));
       _controller2.reverse();
       await Future.delayed(Duration(milliseconds: 200));
-      _controller3.reverse();
+      _controller1.reverse();
       await Future.delayed(Duration(milliseconds: 200));
     } else {
       _controller1.forward();

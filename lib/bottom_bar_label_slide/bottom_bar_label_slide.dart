@@ -1,10 +1,11 @@
 import 'dart:math';
+import 'package:bottom_bar_matu/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import '../bottom_bar_item.dart';
 import 'bottom_bar_label_slide_icon.dart';
 
 class BottomBarLabelSlide extends StatefulWidget {
-  const BottomBarLabelSlide({
+  BottomBarLabelSlide({
     Key? key,
     required this.items,
     this.selectedIndex = 0,
@@ -12,7 +13,8 @@ class BottomBarLabelSlide extends StatefulWidget {
     this.bubbleSize = 10,
     this.color = Colors.green,
     this.onSelect,
-  }) : super(key: key);
+  })  : assert(items.every((element) => element.label?.isNotEmpty ?? false)),
+        super(key: key);
 
   final int selectedIndex;
   final double height;
@@ -26,14 +28,16 @@ class BottomBarLabelSlide extends StatefulWidget {
 }
 
 class _BottomBarLabelSlideState extends State<BottomBarLabelSlide> with SingleTickerProviderStateMixin {
-  static const duration = Duration(milliseconds: 500);
+  static const duration = Duration(milliseconds: 300);
   List<GlobalKey<BottomBarLabelSlideIconState>> iconsKey = [];
 
   late int _iconCount = 0;
   late int _selectedIndex;
+  late int _oldSelectedIndex;
   late AnimationController _animationController;
   late Tween<double> _colorTween;
   late Animation<double?> _animation;
+  late double screenWidth;
 
   @override
   void initState() {
@@ -42,6 +46,7 @@ class _BottomBarLabelSlideState extends State<BottomBarLabelSlide> with SingleTi
     _animation = _colorTween.animate(_animationController);
 
     _selectedIndex = widget.selectedIndex;
+    _oldSelectedIndex = widget.selectedIndex;
     _handleTextChangeFromOutside();
 
     super.initState();
@@ -74,23 +79,49 @@ class _BottomBarLabelSlideState extends State<BottomBarLabelSlide> with SingleTi
     super.dispose();
   }
 
-  double _getLeftPosition() {
-    double width = MediaQuery.of(context).size.width;
+  Pair<double, double> _getAnimationPostion(int index) {
+    final iconWidth = screenWidth / (_iconCount + 1);
 
-    final iconWidth = width / _iconCount;
+    double left, right;
+    if (_selectedIndex > index) {
+      left = index * iconWidth;
+      right = (_iconCount - index) * iconWidth;
+    } else if (_selectedIndex == index) {
+      left = index * iconWidth;
+      right = (_iconCount - index - 1) * iconWidth;
+    } else {
+      left = (index + 1) * iconWidth;
+      right = (_iconCount - index - 1) * iconWidth;
+    }
 
-    return (_selectedIndex * iconWidth) + (iconWidth / 2);
+    return Pair(left, right);
+  }
+
+  Pair<double, double> _getOldPosition(int index) {
+    final iconWidth = screenWidth / (_iconCount + 1);
+
+    double left, right;
+    if (_oldSelectedIndex > index) {
+      left = index * iconWidth;
+      right = (_iconCount - index) * iconWidth;
+    } else if (_oldSelectedIndex == index) {
+      left = index * iconWidth;
+      right = (_iconCount - index - 1) * iconWidth;
+    } else {
+      left = (index + 1) * iconWidth;
+      right = (_iconCount - index - 1) * iconWidth;
+    }
+
+    return Pair(left, right);
   }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    screenWidth = MediaQuery.of(context).size.width;
+    return Container(
+      color: Colors.white,
       height: widget.height,
-      child: Stack(
-        children: [
-          Row(children: _iconsWidget()),
-        ],
-      ),
+      child: Stack(children: _iconsWidget()),
     );
   }
 
@@ -98,18 +129,50 @@ class _BottomBarLabelSlideState extends State<BottomBarLabelSlide> with SingleTi
     List<Widget> iconWidgets = [];
 
     widget.items.asMap().forEach((index, item) {
-      iconWidgets.add(Expanded(
-        child: InkWell(
-          onTap: () => _onChangeIndex(index),
-          child: BottomBarLabelSlideIcon(
-            key: iconsKey[index],
-            isSelected: _selectedIndex == index,
-            item: item,
-            color: widget.color,
-          ),
-        ),
+      iconWidgets.add(AnimatedBuilder(
+        animation: _animation,
+        builder: (BuildContext context, Widget? child) {
+          final value = Utils.getAnimationOneWayValue(_animation);
+
+          final pos = _getOldPosition(index);
+          final left = pos.left;
+          final right = pos.right;
+
+          final newPos = _getAnimationPostion(index);
+          final newLeft = newPos.left;
+          final newRight = newPos.right;
+
+          return Positioned(
+            left: left + value * (newLeft - left),
+            right: right + value * (newRight - right),
+            top: 0,
+            bottom: 0,
+            child: InkWell(
+                onTap: () => _onChangeIndex(index),
+                child: BottomBarLabelSlideIcon(
+                  key: iconsKey[index],
+                  isSelected: _selectedIndex == index,
+                  item: item,
+                  color: widget.color,
+                )),
+          );
+        },
       ));
     });
+    // widget.items.asMap().forEach((index, item) {
+    //   iconWidgets.add(Expanded(
+    //     flex: _selectedIndex == index ? 2 : 1,
+    //     child: InkWell(
+    //       onTap: () => _onChangeIndex(index),
+    //       child: BottomBarLabelSlideIcon(
+    //         key: iconsKey[index],
+    //         isSelected: _selectedIndex == index,
+    //         item: item,
+    //         color: widget.color,
+    //       ),
+    //     ),
+    //   ));
+    // });
 
     return iconWidgets;
   }
@@ -119,6 +182,7 @@ class _BottomBarLabelSlideState extends State<BottomBarLabelSlide> with SingleTi
       return;
     }
 
+    _oldSelectedIndex = _selectedIndex;
     iconsKey[_selectedIndex].currentState?.updateSelect(false);
     await Future.delayed(const Duration(milliseconds: 200));
 

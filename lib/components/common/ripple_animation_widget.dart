@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:bottom_bar_matu/utils/utils.dart';
+import 'package:bottom_bar_matu/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 
 class RippleAnimationWidget extends StatelessWidget {
@@ -20,6 +20,9 @@ class RippleAnimationWidget extends StatelessWidget {
     return AnimatedBuilder(
       animation: animation,
       builder: (BuildContext context, Widget? child) {
+        if (animation.status == AnimationStatus.reverse) {
+          return const SizedBox(width: 50, height: 50);
+        }
         var scaleValue = Utils.getAnimationOneWayValue(animation);
 
         final opacityValue = (-6.25 * pow(animation.value, 2) + 6.25 * animation.value);
