@@ -1,4 +1,8 @@
 
+## [1.2.1]
+
+* Fix gif image for bottom_bar_label_slide
+
 ## [1.2.0]
 
 * Add `bottom_bar_label_slide`
