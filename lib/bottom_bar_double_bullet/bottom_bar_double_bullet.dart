@@ -29,7 +29,8 @@ class BottomBarDoubleBullet extends StatefulWidget {
   State<BottomBarDoubleBullet> createState() => _BottomBarDoubleBulletState();
 }
 
-class _BottomBarDoubleBulletState extends State<BottomBarDoubleBullet> with SingleTickerProviderStateMixin {
+class _BottomBarDoubleBulletState extends State<BottomBarDoubleBullet>
+    with SingleTickerProviderStateMixin {
   static const duration = Duration(milliseconds: 500);
   List<GlobalKey<BottomBarDoubleBulletIconState>> iconsKey = [];
 
@@ -103,7 +104,8 @@ class _BottomBarDoubleBulletState extends State<BottomBarDoubleBullet> with Sing
                       endOffSet.dx,
                       _oldSelectedIndex > _selectedIndex,
                     ),
-                    child: CustomPaint(painter: BulletLinePainter(_getPath1(), widget.color)));
+                    child: CustomPaint(
+                        painter: BulletLinePainter(_getPath1(), widget.color)));
               },
             ),
           ),
@@ -117,11 +119,14 @@ class _BottomBarDoubleBulletState extends State<BottomBarDoubleBullet> with Sing
               final path = _getPath1();
               return Positioned(
                 top: calculate(path).dy - 3,
-                left: calculate(path).dx + (_oldSelectedIndex < _selectedIndex ? 13 : -17),
+                left: calculate(path).dx +
+                    (_oldSelectedIndex < _selectedIndex ? 13 : -17),
                 child: Opacity(
                   opacity: _getAnimationValue() * 1.5 >= 0.9 ? 0 : 1,
                   child: Container(
-                    decoration: BoxDecoration(color: widget.circle1Color, borderRadius: BorderRadius.circular(10)),
+                    decoration: BoxDecoration(
+                        color: widget.circle1Color,
+                        borderRadius: BorderRadius.circular(10)),
                     width: 5,
                     height: 5,
                   ),
@@ -147,7 +152,8 @@ class _BottomBarDoubleBulletState extends State<BottomBarDoubleBullet> with Sing
                       endOffSet.dx,
                       _oldSelectedIndex > _selectedIndex,
                     ),
-                    child: CustomPaint(painter: BulletLinePainter(_getPath2(), widget.color)));
+                    child: CustomPaint(
+                        painter: BulletLinePainter(_getPath2(), widget.color)));
               },
             ),
           ),
@@ -161,11 +167,14 @@ class _BottomBarDoubleBulletState extends State<BottomBarDoubleBullet> with Sing
               final path = _getPath2();
               return Positioned(
                 top: calculate(path).dy - 3,
-                left: calculate(path).dx + (_oldSelectedIndex < _selectedIndex ? 13 : -17),
+                left: calculate(path).dx +
+                    (_oldSelectedIndex < _selectedIndex ? 13 : -17),
                 child: Opacity(
                   opacity: _getAnimationValue() * 1.5 >= 0.9 ? 0 : 1,
                   child: Container(
-                    decoration: BoxDecoration(color: widget.circle2Color, borderRadius: BorderRadius.circular(10)),
+                    decoration: BoxDecoration(
+                        color: widget.circle2Color,
+                        borderRadius: BorderRadius.circular(10)),
                     width: 5,
                     height: 5,
                   ),
@@ -207,7 +216,9 @@ class _BottomBarDoubleBulletState extends State<BottomBarDoubleBullet> with Sing
     }
 
     _oldSelectedIndex = _selectedIndex;
-    iconsKey[_oldSelectedIndex].currentState?.updateSelect(false, _oldSelectedIndex < _selectedIndex);
+    iconsKey[_oldSelectedIndex]
+        .currentState
+        ?.updateSelect(false, _oldSelectedIndex < _selectedIndex);
     // await Future.delayed(const Duration(milliseconds: 200));
 
     if (_animationController.status == AnimationStatus.completed) {
@@ -221,7 +232,9 @@ class _BottomBarDoubleBulletState extends State<BottomBarDoubleBullet> with Sing
     });
 
     await Future.delayed(const Duration(milliseconds: 200));
-    iconsKey[_selectedIndex].currentState?.updateSelect(true, _oldSelectedIndex < _selectedIndex);
+    iconsKey[_selectedIndex]
+        .currentState
+        ?.updateSelect(true, _oldSelectedIndex < _selectedIndex);
 
     widget.onSelect?.call(_selectedIndex);
   }
@@ -239,14 +252,16 @@ class _BottomBarDoubleBulletState extends State<BottomBarDoubleBullet> with Sing
     double screenWidth = MediaQuery.of(context).size.width;
     final iconWidth = screenWidth / _iconCount;
 
-    return Offset((_oldSelectedIndex * iconWidth) + (iconWidth / 2), widget.height / 2);
+    return Offset(
+        (_oldSelectedIndex * iconWidth) + (iconWidth / 2), widget.height / 2);
   }
 
   Offset _getEndOffset() {
     double screenWidth = MediaQuery.of(context).size.width;
     final iconWidth = screenWidth / _iconCount;
 
-    return Offset((_selectedIndex * iconWidth) + (iconWidth / 2), widget.height / 2);
+    return Offset(
+        (_selectedIndex * iconWidth) + (iconWidth / 2), widget.height / 2);
   }
 
   Path _getPath1() {

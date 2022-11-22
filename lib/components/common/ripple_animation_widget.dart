@@ -25,7 +25,8 @@ class RippleAnimationWidget extends StatelessWidget {
         }
         var scaleValue = Utils.getAnimationOneWayValue(animation);
 
-        final opacityValue = (-6.25 * pow(animation.value, 2) + 6.25 * animation.value);
+        final opacityValue =
+            (-6.25 * pow(animation.value, 2) + 6.25 * animation.value);
 
         return Opacity(
           opacity: isSelect

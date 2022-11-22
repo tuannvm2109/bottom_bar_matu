@@ -25,7 +25,8 @@ class BottomBarBubble extends StatefulWidget {
   State<BottomBarBubble> createState() => _BottomBarBubbleState();
 }
 
-class _BottomBarBubbleState extends State<BottomBarBubble> with SingleTickerProviderStateMixin {
+class _BottomBarBubbleState extends State<BottomBarBubble>
+    with SingleTickerProviderStateMixin {
   static const duration = Duration(milliseconds: 500);
   List<GlobalKey<BottomBarBubbleIconState>> iconsKey = [];
 
@@ -97,7 +98,8 @@ class _BottomBarBubbleState extends State<BottomBarBubble> with SingleTickerProv
             child: AnimatedBuilder(
               animation: _animation,
               builder: (BuildContext context, Widget? child) {
-                return _bubbleWidget(const Offset(0, 0), widget.bubbleSize * 0.9);
+                return _bubbleWidget(
+                    const Offset(0, 0), widget.bubbleSize * 0.9);
               },
             ),
           ),
@@ -109,7 +111,8 @@ class _BottomBarBubbleState extends State<BottomBarBubble> with SingleTickerProv
             child: AnimatedBuilder(
               animation: _animation,
               builder: (BuildContext context, Widget? child) {
-                return _bubbleWidget(const Offset(0, 13), widget.bubbleSize * 0.8);
+                return _bubbleWidget(
+                    const Offset(0, 13), widget.bubbleSize * 0.8);
               },
             ),
           ),
@@ -121,7 +124,8 @@ class _BottomBarBubbleState extends State<BottomBarBubble> with SingleTickerProv
             child: AnimatedBuilder(
               animation: _animation,
               builder: (BuildContext context, Widget? child) {
-                return _bubbleWidget(const Offset(0, -10), widget.bubbleSize * 1.1);
+                return _bubbleWidget(
+                    const Offset(0, -10), widget.bubbleSize * 1.1);
               },
             ),
           ),
@@ -133,7 +137,8 @@ class _BottomBarBubbleState extends State<BottomBarBubble> with SingleTickerProv
             child: AnimatedBuilder(
               animation: _animation,
               builder: (BuildContext context, Widget? child) {
-                return _bubbleWidget(const Offset(0, -13), widget.bubbleSize * 0.85);
+                return _bubbleWidget(
+                    const Offset(0, -13), widget.bubbleSize * 0.85);
               },
             ),
           ),
@@ -145,7 +150,8 @@ class _BottomBarBubbleState extends State<BottomBarBubble> with SingleTickerProv
             child: AnimatedBuilder(
               animation: _animation,
               builder: (BuildContext context, Widget? child) {
-                return _bubbleWidget(const Offset(0, 15), widget.bubbleSize * 0.9);
+                return _bubbleWidget(
+                    const Offset(0, 15), widget.bubbleSize * 0.9);
               },
             ),
           ),
