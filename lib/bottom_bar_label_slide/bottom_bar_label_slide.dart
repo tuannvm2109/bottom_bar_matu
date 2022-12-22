@@ -12,6 +12,7 @@ class BottomBarLabelSlide extends StatefulWidget {
     this.bubbleSize = 10,
     this.color = Colors.green,
     this.onSelect,
+    this.backgroundColor = Colors.white,
   })  : assert(items.every((element) => element.label?.isNotEmpty ?? false)),
         super(key: key);
 
@@ -21,6 +22,7 @@ class BottomBarLabelSlide extends StatefulWidget {
   final Color color;
   final ValueChanged<int>? onSelect;
   final List<BottomBarItem> items;
+  final Color backgroundColor;
 
   @override
   State<BottomBarLabelSlide> createState() => _BottomBarLabelSlideState();
@@ -118,7 +120,7 @@ class _BottomBarLabelSlideState extends State<BottomBarLabelSlide> with SingleTi
   Widget build(BuildContext context) {
     screenWidth = MediaQuery.of(context).size.width;
     return Container(
-      color: Colors.white,
+      color: widget.backgroundColor,
       height: widget.height,
       child: Stack(children: _iconsWidget()),
     );
