@@ -84,102 +84,100 @@ class _BottomBarDoubleBulletState extends State<BottomBarDoubleBullet> with Sing
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
+    return Container(
       color: widget.backgroundColor,
-      child: SizedBox(
-        height: widget.height,
-        child: Stack(
-          children: [
-            Positioned.fill(
-              child: AnimatedBuilder(
-                animation: _animation,
-                builder: (BuildContext context, Widget? child) {
-                  if (_oldSelectedIndex == _selectedIndex) {
-                    return const SizedBox();
-                  }
-                  final startOffSet = _getStartOffset();
-                  final endOffSet = _getEndOffset();
+      height: widget.height,
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: AnimatedBuilder(
+              animation: _animation,
+              builder: (BuildContext context, Widget? child) {
+                if (_oldSelectedIndex == _selectedIndex) {
+                  return const SizedBox();
+                }
+                final startOffSet = _getStartOffset();
+                final endOffSet = _getEndOffset();
 
-                  return ClipPath(
-                      clipper: BottomBarDoubleBulletClipper(
-                        _getAnimationValue(),
-                        startOffSet.dx,
-                        endOffSet.dx,
-                        _oldSelectedIndex > _selectedIndex,
-                      ),
-                      child: CustomPaint(painter: BulletLinePainter(_getPath1(), widget.color)));
-                },
-              ),
+                return ClipPath(
+                    clipper: BottomBarDoubleBulletClipper(
+                      _getAnimationValue(),
+                      startOffSet.dx,
+                      endOffSet.dx,
+                      _oldSelectedIndex > _selectedIndex,
+                    ),
+                    child: CustomPaint(painter: BulletLinePainter(_getPath1(), widget.color)));
+              },
             ),
-            AnimatedBuilder(
+          ),
+          AnimatedBuilder(
+            animation: _animation,
+            builder: (BuildContext context, Widget? child) {
+              if (_oldSelectedIndex == _selectedIndex) {
+                return const SizedBox();
+              }
+
+              final path = _getPath1();
+              return Positioned(
+                top: calculate(path).dy - 3,
+                left: calculate(path).dx + (_oldSelectedIndex < _selectedIndex ? 13 : -17),
+                child: Opacity(
+                  opacity: _getAnimationValue() * 1.5 >= 0.9 ? 0 : 1,
+                  child: Container(
+                    decoration: BoxDecoration(color: widget.circle1Color, borderRadius: BorderRadius.circular(10)),
+                    width: 5,
+                    height: 5,
+                  ),
+                ),
+              );
+            },
+          ),
+          Positioned.fill(
+            child: AnimatedBuilder(
               animation: _animation,
               builder: (BuildContext context, Widget? child) {
                 if (_oldSelectedIndex == _selectedIndex) {
                   return const SizedBox();
                 }
 
-                final path = _getPath1();
-                return Positioned(
-                  top: calculate(path).dy - 3,
-                  left: calculate(path).dx + (_oldSelectedIndex < _selectedIndex ? 13 : -17),
-                  child: Opacity(
-                    opacity: _getAnimationValue() * 1.5 >= 0.9 ? 0 : 1,
-                    child: Container(
-                      decoration: BoxDecoration(color: widget.circle1Color, borderRadius: BorderRadius.circular(10)),
-                      width: 5,
-                      height: 5,
+                final startOffSet = _getStartOffset();
+                final endOffSet = _getEndOffset();
+
+                return ClipPath(
+                    clipper: BottomBarDoubleBulletClipper(
+                      _getAnimationValue(),
+                      startOffSet.dx,
+                      endOffSet.dx,
+                      _oldSelectedIndex > _selectedIndex,
                     ),
-                  ),
-                );
+                    child: CustomPaint(painter: BulletLinePainter(_getPath2(), widget.color)));
               },
             ),
-            Positioned.fill(
-              child: AnimatedBuilder(
-                animation: _animation,
-                builder: (BuildContext context, Widget? child) {
-                  if (_oldSelectedIndex == _selectedIndex) {
-                    return const SizedBox();
-                  }
+          ),
+          AnimatedBuilder(
+            animation: _animation,
+            builder: (BuildContext context, Widget? child) {
+              if (_oldSelectedIndex == _selectedIndex) {
+                return const SizedBox();
+              }
 
-                  final startOffSet = _getStartOffset();
-                  final endOffSet = _getEndOffset();
-
-                  return ClipPath(
-                      clipper: BottomBarDoubleBulletClipper(
-                        _getAnimationValue(),
-                        startOffSet.dx,
-                        endOffSet.dx,
-                        _oldSelectedIndex > _selectedIndex,
-                      ),
-                      child: CustomPaint(painter: BulletLinePainter(_getPath2(), widget.color)));
-                },
-              ),
-            ),
-            AnimatedBuilder(
-              animation: _animation,
-              builder: (BuildContext context, Widget? child) {
-                if (_oldSelectedIndex == _selectedIndex) {
-                  return const SizedBox();
-                }
-
-                final path = _getPath2();
-                return Positioned(
-                  top: calculate(path).dy - 3,
-                  left: calculate(path).dx + (_oldSelectedIndex < _selectedIndex ? 13 : -17),
-                  child: Opacity(
-                    opacity: _getAnimationValue() * 1.5 >= 0.9 ? 0 : 1,
-                    child: Container(
-                      decoration: BoxDecoration(color: widget.circle2Color, borderRadius: BorderRadius.circular(10)),
-                      width: 5,
-                      height: 5,
-                    ),
+              final path = _getPath2();
+              return Positioned(
+                top: calculate(path).dy - 3,
+                left: calculate(path).dx + (_oldSelectedIndex < _selectedIndex ? 13 : -17),
+                child: Opacity(
+                  opacity: _getAnimationValue() * 1.5 >= 0.9 ? 0 : 1,
+                  child: Container(
+                    decoration: BoxDecoration(color: widget.circle2Color, borderRadius: BorderRadius.circular(10)),
+                    width: 5,
+                    height: 5,
                   ),
-                );
-              },
-            ),
-            Row(children: _iconsWidget()),
-          ],
-        ),
+                ),
+              );
+            },
+          ),
+          Row(children: _iconsWidget()),
+        ],
       ),
     );
   }
