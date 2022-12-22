@@ -28,7 +28,8 @@ class BottomBarLabelSlide extends StatefulWidget {
   State<BottomBarLabelSlide> createState() => _BottomBarLabelSlideState();
 }
 
-class _BottomBarLabelSlideState extends State<BottomBarLabelSlide> with SingleTickerProviderStateMixin {
+class _BottomBarLabelSlideState extends State<BottomBarLabelSlide>
+    with SingleTickerProviderStateMixin {
   static const duration = Duration(milliseconds: 300);
   List<GlobalKey<BottomBarLabelSlideIconState>> iconsKey = [];
 

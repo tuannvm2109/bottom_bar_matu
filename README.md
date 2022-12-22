@@ -20,11 +20,11 @@ Here are some supported style:
 bottomNavigationBar: BottomBarBubble(
     selectedIndex: _index,
     items: [
-        BottomBarBubbleItem(iconData: Icons.home),
-        BottomBarBubbleItem(iconData: Icons.chat),
-        BottomBarBubbleItem(iconData: Icons.notifications),
-        BottomBarBubbleItem(iconData: Icons.calendar_month),
-        BottomBarBubbleItem(iconData: Icons.settings),
+        BottomBarItem(iconData: Icons.home),
+        BottomBarItem(iconData: Icons.chat),
+        BottomBarItem(iconData: Icons.notifications),
+        BottomBarItem(iconData: Icons.calendar_month),
+        BottomBarItem(iconData: Icons.settings),
     ],
     onSelect: (index) {
       // implement your select function here
@@ -38,11 +38,11 @@ bottomNavigationBar: BottomBarBubble(
 bottomNavigationBar: BottomBarBubble(
     selectedIndex: _index,
     items: [
-        BottomBarBubbleItem(
+        BottomBarItem(
           iconBuilder: (color) => Image.asset('assets/ic_alarm.png', color: color, height: 30, width: 30)),
-        BottomBarBubbleItem(
+        BottomBarItem(
           iconBuilder: (color) => Image.asset('assets/ic_bill.png', color: color, height: 30, width: 30)),
-        BottomBarBubbleItem(
+        BottomBarItem(
           iconBuilder: (color) => Image.asset('assets/ic_box.png', color: color, height: 30, width: 30)),
     ],
     onSelect: (index) {
