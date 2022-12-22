@@ -1,31 +1,52 @@
 import 'package:bottom_bar_matu/components/colors.dart';
 import 'package:flutter/material.dart';
 
-decorOnlySolid({Color? color, double? radius}) =>
-    BoxDecoration(borderRadius: BorderRadius.circular(radius ?? 10), color: color);
+decorOnlySolid({Color? color, double? radius}) => BoxDecoration(
+    borderRadius: BorderRadius.circular(radius ?? 10), color: color);
 
 decorOnlyBorder({Color? color, double? radius, double? width}) => BoxDecoration(
     border: Border.all(color: color ?? colorGrey5, width: width ?? 0.5),
     borderRadius: BorderRadius.circular(radius ?? 10));
 
 decorOnlyBorderBottom({Color? color, double? width, Color? colorSolid}) =>
-    BoxDecoration(color: colorSolid, border: Border(bottom: BorderSide(color: color ?? colorGrey5, width: width ?? 0.5)));
+    BoxDecoration(
+        color: colorSolid,
+        border: Border(
+            bottom:
+                BorderSide(color: color ?? colorGrey5, width: width ?? 0.5)));
 
 decorOnlyBorderTop({Color? color, double? width, Color? colorSolid}) =>
-    BoxDecoration(color: colorSolid, border: Border(top: BorderSide(color: color ?? colorGrey5, width: width ?? 0.5)));
+    BoxDecoration(
+        color: colorSolid,
+        border: Border(
+            top: BorderSide(color: color ?? colorGrey5, width: width ?? 0.5)));
 
 decorOnlyBorderLeft({Color? color, double? width, Color? colorSolid}) =>
-    BoxDecoration(color: colorSolid, border: Border(left: BorderSide(color: color ?? colorGrey5, width: width ?? 0.5)));
+    BoxDecoration(
+        color: colorSolid,
+        border: Border(
+            left: BorderSide(color: color ?? colorGrey5, width: width ?? 0.5)));
 
 decorOnlyBorderRight({Color? color, double? width, Color? colorSolid}) =>
-    BoxDecoration(color: colorSolid, border: Border(right: BorderSide(color: color ?? colorGrey5, width: width ?? 0.5)));
+    BoxDecoration(
+        color: colorSolid,
+        border: Border(
+            right:
+                BorderSide(color: color ?? colorGrey5, width: width ?? 0.5)));
 
-decorSolidBorder({Color? colorBorder, Color? colorSolid, double? radius, double? borderWidth}) => BoxDecoration(
-    border: Border.all(color: colorBorder ?? colorGrey5, width: borderWidth ?? 0.5),
-    borderRadius: BorderRadius.circular(radius ?? 10),
-    color: colorSolid);
+decorSolidBorder(
+        {Color? colorBorder,
+        Color? colorSolid,
+        double? radius,
+        double? borderWidth}) =>
+    BoxDecoration(
+        border: Border.all(
+            color: colorBorder ?? colorGrey5, width: borderWidth ?? 0.5),
+        borderRadius: BorderRadius.circular(radius ?? 10),
+        color: colorSolid);
 
-decorSolidRound({bool? isShadow, required double radius, Color? color}) => BoxDecoration(
+decorSolidRound({bool? isShadow, required double radius, Color? color}) =>
+    BoxDecoration(
       color: color,
       borderRadius: BorderRadius.all(Radius.circular(radius)),
       boxShadow: (isShadow != true)

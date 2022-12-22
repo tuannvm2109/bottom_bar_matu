@@ -22,7 +22,8 @@ class BottomBarLabelSlideIcon extends StatefulWidget {
   BottomBarLabelSlideIconState createState() => BottomBarLabelSlideIconState();
 }
 
-class BottomBarLabelSlideIconState extends State<BottomBarLabelSlideIcon> with TickerProviderStateMixin {
+class BottomBarLabelSlideIconState extends State<BottomBarLabelSlideIcon>
+    with TickerProviderStateMixin {
   static const duration = Duration(milliseconds: 500);
 
   final Tween<double> _tween = Tween(begin: 0, end: 1);
@@ -88,7 +89,8 @@ class BottomBarLabelSlideIconState extends State<BottomBarLabelSlideIcon> with T
                         widget.item.label!,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: (widget.item.labelTextStyle ?? const TextStyle()).copyWith(color: color),
+                        style: (widget.item.labelTextStyle ?? const TextStyle())
+                            .copyWith(color: color),
                       ),
               );
             },
@@ -139,10 +141,13 @@ class BottomBarLabelSlideIconState extends State<BottomBarLabelSlideIcon> with T
         AnimatedBuilder(
           animation: _animation1,
           builder: (BuildContext context, Widget? child) {
-            final color = Color.lerp(colorGrey5, widget.color, _animation1.value);
+            final color =
+                Color.lerp(colorGrey5, widget.color, _animation1.value);
             final oneWayValue = Utils.getAnimationOneWayValue(_animation1);
             final double scaleValue =
-                _animation1.status == AnimationStatus.reverse ? 1 : -5 * (pow(oneWayValue, 2) - oneWayValue);
+                _animation1.status == AnimationStatus.reverse
+                    ? 1
+                    : -5 * (pow(oneWayValue, 2) - oneWayValue);
 
             return Transform.scale(
               scale: scaleValue < 1 ? 1 : scaleValue,
@@ -161,9 +166,12 @@ class BottomBarLabelSlideIconState extends State<BottomBarLabelSlideIcon> with T
 
   Widget _buildIconWidget(Color color) {
     if (widget.item.iconBuilder != null) {
-      return Padding(padding: const EdgeInsets.all(10), child: widget.item.iconBuilder!.call(color));
+      return Padding(
+          padding: const EdgeInsets.all(10),
+          child: widget.item.iconBuilder!.call(color));
     } else {
-      return Icon(widget.item.iconData!, size: widget.item.iconSize, color: color);
+      return Icon(widget.item.iconData!,
+          size: widget.item.iconSize, color: color);
     }
   }
 

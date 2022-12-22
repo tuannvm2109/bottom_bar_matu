@@ -67,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
         onSelect: (index) {
-          controller.jumpToPage(index);
+          // implement your select function here
         },
       ),
       body: PageView(
