@@ -1,6 +1,6 @@
 name: bottom_bar_matu
 description: A beautiful and animated bottom navigation bar, easy to implementation with icon data or customize with your own widget.
-version: 1.2.2
+version: 1.2.3
 homepage: https://github.com/tuannvm2109/bottom_bar_matu
 
 environment:

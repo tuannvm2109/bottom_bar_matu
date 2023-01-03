@@ -81,11 +81,15 @@ class BottomBarDoubleBulletIconState extends State<BottomBarDoubleBulletIcon>
             final scaleValue =
                 -5 * (pow(_animation.value, 2) - _animation.value);
 
-            return Transform.rotate(
-              angle:
-                  -pi / (_isLeftToRight ? (8 * scaleValue) : -(8 * scaleValue)),
-              child: _buildIconWidget(color!),
-            );
+            if (scaleValue == 0) {
+              return _buildIconWidget(color!);
+            } else {
+              return Transform.rotate(
+                angle: -pi /
+                    (_isLeftToRight ? (8 * scaleValue) : -(8 * scaleValue)),
+                child: _buildIconWidget(color!),
+              );
+            }
           },
         ),
       ],

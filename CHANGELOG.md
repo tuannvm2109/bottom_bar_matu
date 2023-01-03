@@ -1,3 +1,7 @@
+## [1.2.3]
+
+* Fix `BottomBarDoubleBullet` with `radians.isFinite` bug when update to Flutter version 3.3.9 and above
+
 ## [1.2.2]
 
 * Update read me
