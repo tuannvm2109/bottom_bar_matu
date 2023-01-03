@@ -11,6 +11,7 @@ class BottomBarBubble extends StatefulWidget {
     this.height = 71,
     this.bubbleSize = 10,
     this.color = Colors.green,
+    this.backgroundColor = Colors.white,
     this.onSelect,
   }) : super(key: key);
 
@@ -18,6 +19,7 @@ class BottomBarBubble extends StatefulWidget {
   final double height;
   final double bubbleSize;
   final Color color;
+  final Color backgroundColor;
   final ValueChanged<int>? onSelect;
   final List<BottomBarItem> items;
 
@@ -85,7 +87,8 @@ class _BottomBarBubbleState extends State<BottomBarBubble>
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+      color: widget.backgroundColor,
       height: widget.height,
       child: Stack(
         children: [

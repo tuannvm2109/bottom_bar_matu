@@ -1,3 +1,7 @@
+## [1.3.0]
+
+* add `backgroundColor`
+
 ## [1.2.3]
 
 * Fix `BottomBarDoubleBullet` with `radians.isFinite` bug when update to Flutter version 3.3.9 and above

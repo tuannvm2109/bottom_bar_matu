@@ -13,6 +13,7 @@ class BottomBarDoubleBullet extends StatefulWidget {
     this.color = Colors.green,
     this.circle1Color = Colors.blue,
     this.circle2Color = Colors.red,
+    this.backgroundColor = Colors.white,
     this.onSelect,
   }) : super(key: key);
 
@@ -22,6 +23,7 @@ class BottomBarDoubleBullet extends StatefulWidget {
   final Color color;
   final Color circle1Color;
   final Color circle2Color;
+  final Color backgroundColor;
   final ValueChanged<int>? onSelect;
   final List<BottomBarItem> items;
 
@@ -83,7 +85,8 @@ class _BottomBarDoubleBulletState extends State<BottomBarDoubleBullet>
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+      color: widget.backgroundColor,
       height: widget.height,
       child: Stack(
         children: [

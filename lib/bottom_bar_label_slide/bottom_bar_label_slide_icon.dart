@@ -11,11 +11,13 @@ class BottomBarLabelSlideIcon extends StatefulWidget {
     Key? key,
     required this.item,
     required this.color,
+    this.backgroundColor = Colors.white,
     this.isSelected = false,
   }) : super(key: key);
 
   final BottomBarItem item;
   final Color color;
+  final Color backgroundColor;
   final bool isSelected;
 
   @override
@@ -37,8 +39,6 @@ class BottomBarLabelSlideIconState extends State<BottomBarLabelSlideIcon>
   late AnimationController _controller3;
   late Animation<double> _animation3;
 
-  bool _isSelect = false;
-
   @override
   void initState() {
     _controller1 = AnimationController(vsync: this, duration: duration);
@@ -48,7 +48,6 @@ class BottomBarLabelSlideIconState extends State<BottomBarLabelSlideIcon>
     _controller3 = AnimationController(vsync: this, duration: duration);
     _animation3 = _tween.animate(_controller3);
     if (widget.isSelected) {
-      _isSelect = widget.isSelected;
       _controller1.forward();
       _controller2.forward();
       _controller3.forward();
@@ -121,7 +120,7 @@ class BottomBarLabelSlideIconState extends State<BottomBarLabelSlideIcon>
             bottom: 0,
             left: 0,
             right: 0,
-            child: Container(color: Colors.white, height: 22),
+            child: Container(color: widget.backgroundColor, height: 22),
           ),
           Positioned(
             bottom: 0,
@@ -176,24 +175,20 @@ class BottomBarLabelSlideIconState extends State<BottomBarLabelSlideIcon>
   }
 
   Future updateSelect(bool isSelect) async {
-    setState(() {
-      _isSelect = isSelect;
-    });
-
     if (!isSelect) {
       _controller3.reverse();
-      await Future.delayed(Duration(milliseconds: 200));
+      await Future.delayed(const Duration(milliseconds: 200));
       _controller2.reverse();
-      await Future.delayed(Duration(milliseconds: 200));
+      await Future.delayed(const Duration(milliseconds: 200));
       _controller1.reverse();
-      await Future.delayed(Duration(milliseconds: 200));
+      await Future.delayed(const Duration(milliseconds: 200));
     } else {
       _controller1.forward();
-      await Future.delayed(Duration(milliseconds: 200));
+      await Future.delayed(const Duration(milliseconds: 200));
       _controller2.forward();
-      await Future.delayed(Duration(milliseconds: 200));
+      await Future.delayed(const Duration(milliseconds: 200));
       _controller3.forward();
-      await Future.delayed(Duration(milliseconds: 200));
+      await Future.delayed(const Duration(milliseconds: 200));
     }
   }
 }

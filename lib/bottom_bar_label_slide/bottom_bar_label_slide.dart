@@ -11,6 +11,7 @@ class BottomBarLabelSlide extends StatefulWidget {
     this.height = 71,
     this.bubbleSize = 10,
     this.color = Colors.green,
+    this.backgroundColor = Colors.white,
     this.onSelect,
   })  : assert(items.every((element) => element.label?.isNotEmpty ?? false)),
         super(key: key);
@@ -19,6 +20,7 @@ class BottomBarLabelSlide extends StatefulWidget {
   final double height;
   final double bubbleSize;
   final Color color;
+  final Color backgroundColor;
   final ValueChanged<int>? onSelect;
   final List<BottomBarItem> items;
 
@@ -119,7 +121,7 @@ class _BottomBarLabelSlideState extends State<BottomBarLabelSlide>
   Widget build(BuildContext context) {
     screenWidth = MediaQuery.of(context).size.width;
     return Container(
-      color: Colors.white,
+      color: widget.backgroundColor,
       height: widget.height,
       child: Stack(children: _iconsWidget()),
     );
@@ -154,25 +156,12 @@ class _BottomBarLabelSlideState extends State<BottomBarLabelSlide>
                   isSelected: _selectedIndex == index,
                   item: item,
                   color: widget.color,
+                  backgroundColor: widget.backgroundColor,
                 )),
           );
         },
       ));
     });
-    // widget.items.asMap().forEach((index, item) {
-    //   iconWidgets.add(Expanded(
-    //     flex: _selectedIndex == index ? 2 : 1,
-    //     child: InkWell(
-    //       onTap: () => _onChangeIndex(index),
-    //       child: BottomBarLabelSlideIcon(
-    //         key: iconsKey[index],
-    //         isSelected: _selectedIndex == index,
-    //         item: item,
-    //         color: widget.color,
-    //       ),
-    //     ),
-    //   ));
-    // });
 
     return iconWidgets;
   }
