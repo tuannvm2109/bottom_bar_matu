@@ -1,3 +1,7 @@
+## [1.4.0]
+
+* Change `onSelect` call before start animation
+
 ## [1.3.1]
 
 * Fix gif image broken

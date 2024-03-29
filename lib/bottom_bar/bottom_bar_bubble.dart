@@ -206,6 +206,8 @@ class _BottomBarBubbleState extends State<BottomBarBubble>
       return;
     }
 
+    widget.onSelect?.call(_selectedIndex);
+
     iconsKey[_selectedIndex].currentState?.updateSelect(false);
     await Future.delayed(const Duration(milliseconds: 200));
 
@@ -221,7 +223,5 @@ class _BottomBarBubbleState extends State<BottomBarBubble>
 
     await Future.delayed(const Duration(milliseconds: 200));
     iconsKey[_selectedIndex].currentState?.updateSelect(true);
-
-    widget.onSelect?.call(_selectedIndex);
   }
 }
