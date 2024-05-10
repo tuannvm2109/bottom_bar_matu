@@ -1,3 +1,7 @@
+## [1.5.0]
+
+* Fix bug `onSelect` call wrong index
+
 ## [1.4.0]
 
 * Change `onSelect` call before start animation

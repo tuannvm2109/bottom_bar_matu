@@ -206,7 +206,7 @@ class _BottomBarBubbleState extends State<BottomBarBubble>
       return;
     }
 
-    widget.onSelect?.call(_selectedIndex);
+    widget.onSelect?.call(index);
 
     iconsKey[_selectedIndex].currentState?.updateSelect(false);
     await Future.delayed(const Duration(milliseconds: 200));
